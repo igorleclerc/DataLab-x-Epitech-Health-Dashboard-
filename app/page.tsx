@@ -130,7 +130,7 @@ export default function Dashboard() {
         {currentView === 'map' && (
           <div className="flex h-full">
             {/* Carte - 70% */}
-            <div className="flex-1 w-[70%] p-4">
+            <div className="flex-1 w-[70%] p-4 pb-6">
               <InteractiveMap
                 data={departmentData}
                 dataType={dataType}

@@ -107,15 +107,11 @@ export function AnalyticsPanel({ dataType, departmentData, selectedDepartment }:
       { 
         group: '65 ans et +', 
         coverage: ageGroupData.grippe65Plus / ageGroupData.count,
-        target: 75,
-        population: 'Prioritaire',
         color: '#3b82f6'
       },
       { 
         group: 'Moins de 65 ans', 
         coverage: ageGroupData.grippeMoins65 / ageGroupData.count,
-        target: 30,
-        population: 'Générale',
         color: '#93c5fd'
       }
     ]
@@ -130,32 +126,12 @@ export function AnalyticsPanel({ dataType, departmentData, selectedDepartment }:
       .map(d => ({
         name: d.name,
         population: d.population! / 1000, // En milliers
-        coverage: d.vaccinationCoverage!,
-        size: Math.log(d.population! / 1000) * 10 // Taille du point basée sur la population
+        coverage: d.vaccinationCoverage!
       }))
-      .slice(0, 50) // Limiter pour la lisibilité
+      .slice(0, 40) // Limiter pour la lisibilité
   }
 
-  // 6. Évolution saisonnière simulée (données réalistes)
-  const getSeasonalTrend = () => {
-    if (!isVaccination) return []
-    
-    const months = [
-      'Sept', 'Oct', 'Nov', 'Déc', 'Jan', 'Fév', 'Mars', 'Avr'
-    ]
-    
-    // Simulation d'une campagne de vaccination grippale réaliste
-    const baseData = [15, 35, 55, 68, 72, 74, 75, 75] // Progression typique
-    
-    return months.map((month, index) => ({
-      month,
-      coverage: baseData[index],
-      target: 75,
-      optimal: index < 3 ? baseData[index] + 5 : 75 // Courbe optimale
-    }))
-  }
-
-  // 7. Analyse des types de vaccins (pour vaccination)
+  // 6. Analyse des types de vaccins (pour vaccination)
   const getVaccineTypesComparison = () => {
     if (!isVaccination) return []
     
@@ -176,29 +152,21 @@ export function AnalyticsPanel({ dataType, departmentData, selectedDepartment }:
       { 
         vaccine: 'Grippe', 
         coverage: vaccineData.grippe / vaccineData.count,
-        target: 75,
-        priority: 'Haute',
         color: '#3b82f6'
       },
       { 
         vaccine: 'COVID-19', 
         coverage: vaccineData.covid / vaccineData.count,
-        target: 80,
-        priority: 'Haute',
         color: '#ef4444'
       },
       { 
         vaccine: 'HPV', 
         coverage: vaccineData.hpv / vaccineData.count,
-        target: 60,
-        priority: 'Moyenne',
         color: '#f59e0b'
       },
       { 
         vaccine: 'Méningocoque', 
         coverage: vaccineData.meningocoque / vaccineData.count,
-        target: 70,
-        priority: 'Moyenne',
         color: '#10b981'
       }
     ]
@@ -341,79 +309,80 @@ export function AnalyticsPanel({ dataType, departmentData, selectedDepartment }:
           </div>
         </div>
 
-        {/* Vaccination Analysis - Multiple Charts */}
+        {/* Vaccination Analysis - Pertinent Charts */}
         {isVaccination && (
           <>
-            {/* Age Group Analysis */}
+            {/* Disparités Géographiques - Carte de chaleur */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  Disparités Géographiques de Couverture
+                </h3>
+                <ChartExplanation
+                  title="Inégalités Territoriales"
+                  explanation="Analyse des écarts de couverture vaccinale entre départements."
+                  insights={[
+                    "Identification des zones sous-vaccinées",
+                    "Corrélation avec la densité de population",
+                    "Facteurs socio-économiques territoriaux"
+                  ]}
+                />
+              </div>
+              <div className="h-96">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={performanceData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis 
+                      dataKey="name" 
+                      angle={-45}
+                      textAnchor="end"
+                      height={80}
+                      fontSize={11}
+                    />
+                    <YAxis label={{ value: 'Couverture (%)', angle: -90, position: 'insideLeft' }} />
+                    <Tooltip 
+                      formatter={(value: any) => [`${value?.toFixed(1)}%`, 'Couverture vaccinale']}
+                      labelFormatter={(label) => `Département: ${label}`}
+                    />
+                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                      {performanceData.map((entry, index) => (
+                        <Cell 
+                          key={`cell-${index}`} 
+                          fill={entry.type === 'top' ? '#22c55e' : '#ef4444'} 
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Analyse Démographique Détaillée */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-semibold text-gray-900">
-                    Couverture par Groupe d'Âge
+                    Couverture par Tranche d'Âge
                   </h3>
                   <ChartExplanation
-                    title="Analyse par Âge - Grippe"
-                    explanation="Comparaison de la couverture vaccinale grippe entre les groupes d'âge prioritaires."
+                    title="Analyse Démographique"
+                    explanation="Différences de couverture entre les groupes d'âge."
                     insights={[
-                      "65+ ans : Population prioritaire (objectif 75%)",
-                      "<65 ans : Population générale (objectif 30%)",
-                      "Écart important entre les groupes d'âge"
+                      "65+ ans : Population à risque élevé",
+                      "Moins de 65 ans : Couverture plus faible",
+                      "Écart générationnel significatif"
                     ]}
                   />
                 </div>
-                <div className="h-64">
+                <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
-                    <ComposedChart data={getAgeGroupAnalysis()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <BarChart data={getAgeGroupAnalysis()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="group" />
                       <YAxis label={{ value: 'Couverture (%)', angle: -90, position: 'insideLeft' }} />
-                      <Tooltip formatter={(value: any, name: string) => [
-                        `${Number(value).toFixed(1)}%`, 
-                        name === 'coverage' ? 'Couverture actuelle' : 'Objectif'
-                      ]} />
+                      <Tooltip formatter={(value: any) => [`${Number(value).toFixed(1)}%`, 'Couverture']} />
                       <Bar dataKey="coverage" radius={[4, 4, 0, 0]}>
                         {getAgeGroupAnalysis().map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Bar>
-                      <Line 
-                        type="monotone" 
-                        dataKey="target" 
-                        stroke="#ef4444" 
-                        strokeWidth={3}
-                        strokeDasharray="5 5"
-                        dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
-                      />
-                    </ComposedChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Distribution Chart */}
-              <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Distribution par Niveau
-                  </h3>
-                  <ChartExplanation
-                    title="Distribution des Performances"
-                    explanation="Répartition des départements par tranche de couverture vaccinale."
-                    insights={[
-                      "Rouge (<50%) : Intervention urgente",
-                      "Orange/Jaune (50-70%) : À améliorer", 
-                      "Vert (>70%) : Objectifs atteints"
-                    ]}
-                  />
-                </div>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={getVaccinationDistributionData()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="range" />
-                      <YAxis />
-                      <Tooltip formatter={(value) => [`${value} départements`, 'Nombre']} />
-                      <Bar dataKey="count" radius={[4, 4, 0, 0]}>
-                        {getVaccinationDistributionData().map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}
                       </Bar>
@@ -421,155 +390,120 @@ export function AnalyticsPanel({ dataType, departmentData, selectedDepartment }:
                   </ResponsiveContainer>
                 </div>
               </div>
-            </div>
 
-            {/* Seasonal Trend Analysis */}
-            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Évolution Saisonnière de la Vaccination Grippe
-                </h3>
-                <ChartExplanation
-                  title="Campagne Vaccinale Saisonnière"
-                  explanation="Progression de la couverture vaccinale grippe au cours de la saison."
-                  insights={[
-                    "Pic de vaccination en octobre-novembre",
-                    "Objectif 75% à atteindre avant décembre",
-                    "Courbe optimale vs réalité terrain"
-                  ]}
-                />
-              </div>
-              <div className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={getSeasonalTrend()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis label={{ value: 'Couverture (%)', angle: -90, position: 'insideLeft' }} />
-                    <Tooltip formatter={(value: any, name: string) => [
-                      `${value}%`, 
-                      name === 'coverage' ? 'Couverture réelle' : 
-                      name === 'target' ? 'Objectif' : 'Courbe optimale'
-                    ]} />
-                    <Area 
-                      type="monotone" 
-                      dataKey="optimal" 
-                      stroke="#22c55e" 
-                      fill="#22c55e" 
-                      fillOpacity={0.1}
-                      strokeWidth={2}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="coverage" 
-                      stroke="#3b82f6" 
-                      strokeWidth={3}
-                      dot={{ fill: '#3b82f6', strokeWidth: 2, r: 5 }}
-                    />
-                    <Line 
-                      type="monotone" 
-                      dataKey="target" 
-                      stroke="#ef4444" 
-                      strokeWidth={2}
-                      strokeDasharray="5 5"
-                      dot={false}
-                    />
-                  </ComposedChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Multi-Vaccine Comparison */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Corrélation Taille vs Performance */}
               <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-semibold text-gray-900">
-                    Comparaison Multi-Vaccins
+                    Taille vs Performance
                   </h3>
                   <ChartExplanation
-                    title="Performance par Type de Vaccin"
-                    explanation="Comparaison des couvertures vaccinales par type de vaccin."
+                    title="Impact de la Démographie"
+                    explanation="Relation entre population départementale et couverture vaccinale."
                     insights={[
-                      "Grippe et COVID : priorités sanitaires",
-                      "HPV : enjeu de prévention cancer",
-                      "Méningocoque : protection communautaire"
+                      "Départements ruraux vs urbains",
+                      "Effet de la densité médicale",
+                      "Accessibilité aux soins"
                     ]}
                   />
                 </div>
-                <div className="h-64">
+                <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
-                    <ComposedChart data={getVaccineTypesComparison()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="vaccine" />
-                      <YAxis label={{ value: 'Couverture (%)', angle: -90, position: 'insideLeft' }} />
-                      <Tooltip formatter={(value: any, name: string) => [
-                        `${Number(value).toFixed(1)}%`, 
-                        name === 'coverage' ? 'Couverture' : 'Objectif'
-                      ]} />
-                      <Bar dataKey="coverage" radius={[4, 4, 0, 0]}>
-                        {getVaccineTypesComparison().map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Bar>
-                      <Line 
-                        type="monotone" 
-                        dataKey="target" 
-                        stroke="#ef4444" 
-                        strokeWidth={3}
-                        strokeDasharray="5 5"
-                        dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }}
-                      />
-                    </ComposedChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Population vs Coverage Scatter */}
-              <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-gray-900">
-                    Population vs Couverture
-                  </h3>
-                  <ChartExplanation
-                    title="Corrélation Démographique"
-                    explanation="Relation entre taille de population et performance vaccinale."
-                    insights={[
-                      "Taille des bulles = population",
-                      "Pas de corrélation systématique",
-                      "Défis spécifiques par territoire"
-                    ]}
-                  />
-                </div>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <ScatterChart data={getPopulationCoverageData()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <ScatterChart data={getPopulationCoverageData()} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis 
                         dataKey="population" 
                         type="number" 
                         domain={['dataMin', 'dataMax']}
-                        label={{ value: 'Population (milliers)', position: 'insideBottom', offset: -5 }}
+                        label={{ value: 'Population (milliers)', position: 'insideBottom', offset: -10 }}
                       />
                       <YAxis 
                         dataKey="coverage" 
                         type="number" 
-                        domain={[0, 100]}
+                        domain={[30, 90]}
                         label={{ value: 'Couverture (%)', angle: -90, position: 'insideLeft' }}
                       />
                       <Tooltip 
                         formatter={(value: any, name: string) => [
-                          name === 'coverage' ? `${Number(value).toFixed(1)}%` : `${Number(value).toFixed(0)}k`,
+                          name === 'coverage' ? `${Number(value).toFixed(1)}%` : `${Number(value).toFixed(0)}k hab.`,
                           name === 'coverage' ? 'Couverture' : 'Population'
                         ]}
-                        labelFormatter={(label) => `Département: ${label}`}
+                        labelFormatter={(label) => `${label}`}
                       />
                       <Scatter 
                         dataKey="coverage" 
                         fill="#3b82f6" 
-                        fillOpacity={0.6}
+                        fillOpacity={0.7}
                       />
                     </ScatterChart>
                   </ResponsiveContainer>
                 </div>
+              </div>
+            </div>
+
+            {/* Comparaison Multi-Vaccins Réelle */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  Panorama Vaccinal par Type
+                </h3>
+                <ChartExplanation
+                  title="Comparaison Inter-Vaccins"
+                  explanation="Performance relative des différents programmes vaccinaux."
+                  insights={[
+                    "COVID-19 : Mobilisation exceptionnelle",
+                    "Grippe : Vaccination saisonnière établie",
+                    "HPV : Enjeux d'acceptabilité sociale"
+                  ]}
+                />
+              </div>
+              <div className="h-96">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={getVaccineTypesComparison()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="vaccine" />
+                    <YAxis label={{ value: 'Couverture Moyenne (%)', angle: -90, position: 'insideLeft' }} />
+                    <Tooltip formatter={(value: any) => [`${Number(value).toFixed(1)}%`, 'Couverture moyenne']} />
+                    <Bar dataKey="coverage" radius={[4, 4, 0, 0]}>
+                      {getVaccineTypesComparison().map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Distribution Statistique */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  Répartition des Performances Départementales
+                </h3>
+                <ChartExplanation
+                  title="Distribution Statistique"
+                  explanation="Analyse de la répartition des taux de couverture."
+                  insights={[
+                    "Concentration des départements par tranche",
+                    "Identification des valeurs aberrantes",
+                    "Médiane et écart-type national"
+                  ]}
+                />
+              </div>
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={getVaccinationDistributionData()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="range" />
+                    <YAxis label={{ value: 'Nombre de départements', angle: -90, position: 'insideLeft' }} />
+                    <Tooltip formatter={(value) => [`${value} départements`, 'Effectif']} />
+                    <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                      {getVaccinationDistributionData().map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </>

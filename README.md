@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tableau de Bord Vaccination et Grippe
 
-## Getting Started
+Projet développé dans le cadre du hackathon Élysée DataLab 2025 pour la visualisation des données de vaccination et de surveillance de la grippe en France.
 
-First, run the development server:
+## 🎯 Objectifs du Projet
+
+- **Visualisation des données** : Créer des graphiques interactifs pour analyser les données de vaccination et de surveillance grippe
+- **Prédictions IA** : Implémenter des prédictions basées sur des modèles de langage (fonctionnalité optionnelle)
+- **Interface française** : Application entièrement en français avec formatage des dates et nombres selon les standards français
+
+## 📊 Données Utilisées
+
+### Vaccination
+
+- `campagne-2024.csv` : Données de campagne de vaccination
+- `couverture-2024.csv` : Couverture vaccinale par région
+- `doses-actes-2024.csv` : Doses administrées et actes de vaccination
+
+### Surveillance Grippe
+
+- `grippe-passages-aux-urgences-et-actes-sos-medecins-france.csv` : Données nationales
+- `grippe-passages-aux-urgences-et-actes-sos-medecins-departement.csv` : Données départementales
+
+## 🚀 Démarrage Rapide
+
+### Prérequis
+
+- Node.js 18+
+- pnpm (recommandé)
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Cloner le projet
+git clone [url-du-repo]
+cd dahsboard
+
+# Installer les dépendances
+pnpm install
+
+# Lancer le serveur de développement
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technologies Utilisées
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework** : Next.js 15 avec App Router
+- **Langage** : TypeScript
+- **Styling** : Tailwind CSS 4
+- **Graphiques** : Recharts
+- **Parsing CSV** : Papa Parse
+- **Icônes** : Lucide React
 
-## Learn More
+## 🎨 Palette de Couleurs
 
-To learn more about Next.js, take a look at the following resources:
+- **Primaire** : #10162F (Bleu marine)
+- **Arrière-plan** : #FFFFFF (Blanc)
+- **Accent** : #B01E09 (Rouge)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Structure du Projet
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+├── app/                    # Pages Next.js (App Router)
+├── lib/
+│   ├── types/             # Interfaces TypeScript
+│   ├── constants/         # Constantes et textes
+│   └── utils/             # Utilitaires (formatage, etc.)
+├── data/                  # Fichiers CSV
+└── public/                # Assets statiques
+```
 
-## Deploy on Vercel
+## 🔧 Développement
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Scripts Disponibles
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dev          # Serveur de développement
+pnpm build        # Build de production
+pnpm start        # Serveur de production
+```
+
+### Fonctionnalités Implémentées
+
+- ✅ Configuration du projet et dépendances
+- ✅ Types TypeScript pour les données
+- ✅ Interface utilisateur en français
+- ✅ Palette de couleurs personnalisée
+- 🚧 Parseurs CSV (en cours)
+- ⏳ Composants de visualisation
+- ⏳ Interface utilisateur complète
+
+## 📝 Spécifications
+
+Le projet suit une approche de développement dirigée par les spécifications :
+
+- `requirements.md` : Exigences fonctionnelles
+- `design.md` : Architecture et conception
+- `tasks.md` : Plan d'implémentation
+
+## 🏆 Hackathon Élysée DataLab
+
+Ce projet est développé dans le cadre du hackathon organisé par l'Élysée DataLab, l'équipe d'ingénierie de la République française, avec pour objectif de créer des outils de visualisation et d'analyse des données de santé publique.
+
+## 📄 Licence
+
+Projet développé dans le cadre éducatif - Hackathon Élysée DataLab 2025

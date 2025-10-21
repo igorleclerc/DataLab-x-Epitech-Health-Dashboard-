@@ -1,103 +1,175 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { useState, useEffect } from 'react'
+import { InteractiveMap } from '@/lib/components/InteractiveMap'
+import { StatisticsPanel } from '@/lib/components/StatisticsPanel'
+import { AnalyticsPanel } from '@/lib/components/AnalyticsPanel'
+import { DataToggle } from '@/lib/components/DataToggle'
+import { ViewToggle } from '@/lib/components/ViewToggle'
+import { YearSelector } from '@/lib/components/YearSelector'
+import { LoadingSpinner } from '@/lib/components/LoadingSpinner'
+import { DataQualityIndicator } from '@/lib/components/DataQualityIndicator'
+import { DashboardGuide } from '@/lib/components/DashboardGuide'
+import { TestDataService } from '@/lib/services/test-data-service'
+import type { DepartmentData, DataType, ViewType } from '@/lib/types/dashboard'
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+export default function Dashboard() {
+  const [dataType, setDataType] = useState<DataType>('grippe-vaccination')
+  const [currentView, setCurrentView] = useState<ViewType>('map')
+  const [selectedYear, setSelectedYear] = useState<number | 'all'>('all')
+  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null)
+  const [departmentData, setDepartmentData] = useState<DepartmentData[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  
+  const availableYears = TestDataService.getAvailableYears()
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        
+        // Simulate loading delay
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        // Load test data based on current data type and year
+        const data = selectedYear === 'all' 
+          ? TestDataService.generateAggregatedData(dataType)
+          : TestDataService.generateDepartmentData(dataType, selectedYear)
+        setDepartmentData(data)
+      } catch (err) {
+        console.error('Error loading data:', err)
+        setError('Erreur lors du chargement des données')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadData()
+  }, [dataType, selectedYear])
+
+  const handleDataTypeChange = (newDataType: DataType) => {
+    setDataType(newDataType)
+  }
+
+  const handleDepartmentSelect = (departmentCode: string | null) => {
+    setSelectedDepartment(departmentCode)
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">Erreur</h2>
+          <p className="text-gray-600">{error}</p>
         </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header épuré */}
+      <header className="bg-white border-b border-gray-100 px-6 py-4">
+        <div className="flex items-center justify-between">
+          {/* Titre */}
+          <div>
+            <h1 className="text-2xl font-bold text-blue-france">
+              Dashboard Vaccination & Grippe
+            </h1>
+            <p className="text-sm text-gray-600 mt-1">
+              Données de surveillance sanitaire - France 2021-2024
+            </p>
+          </div>
+
+          {/* Contrôles principaux */}
+          <div className="flex items-center space-x-6">
+            <DataToggle 
+              currentType={dataType} 
+              onTypeChange={handleDataTypeChange}
+            />
+            
+            <YearSelector
+              selectedYear={selectedYear}
+              onYearChange={setSelectedYear}
+              availableYears={availableYears}
+              dataType={dataType}
+            />
+          </div>
+        </div>
+
+        {/* Barre de navigation secondaire */}
+        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-50">
+          <ViewToggle 
+            currentView={currentView}
+            onViewChange={setCurrentView}
+          />
+          
+          <div className="flex items-center space-x-4">
+            <DataQualityIndicator 
+              dataCount={departmentData.length} 
+              dataType={dataType}
+              selectedYear={selectedYear}
+            />
+            <DashboardGuide />
+          </div>
+        </div>
+      </header>
+
+      {/* Contenu principal */}
+      <main className="h-[calc(100vh-140px)]">
+        {currentView === 'map' && (
+          <div className="flex h-full">
+            {/* Carte - 70% */}
+            <div className="flex-1 w-[70%] p-4">
+              <InteractiveMap
+                data={departmentData}
+                dataType={dataType}
+                selectedDepartment={selectedDepartment}
+                onDepartmentSelect={handleDepartmentSelect}
+              />
+            </div>
+
+            {/* Panneau statistiques - 30% */}
+            <div className="w-[30%] border-l border-gray-100 bg-gray-50">
+              <StatisticsPanel
+                dataType={dataType}
+                selectedDepartment={selectedDepartment}
+                departmentData={departmentData}
+              />
+            </div>
+          </div>
+        )}
+
+        {currentView === 'statistics' && (
+          <div className="h-full p-4">
+            <StatisticsPanel
+              dataType={dataType}
+              selectedDepartment={selectedDepartment}
+              departmentData={departmentData}
+            />
+          </div>
+        )}
+
+        {currentView === 'analytics' && (
+          <div className="h-full">
+            <AnalyticsPanel
+              dataType={dataType}
+              departmentData={departmentData}
+              selectedDepartment={selectedDepartment}
+            />
+          </div>
+        )}
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }

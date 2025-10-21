@@ -248,7 +248,7 @@ export class TestDataService {
     })
 
     // Convertir en array et trier
-    const aggregatedData = Array.from(departmentMap.values())
+    const sortedData = Array.from(departmentMap.values())
       .sort((a, b) => {
         const aValue = dataType === 'flu-surveillance' ? (a.fluActivity || 0) : (a.vaccinationCoverage || 0)
         const bValue = dataType === 'flu-surveillance' ? (b.fluActivity || 0) : (b.vaccinationCoverage || 0)
@@ -259,10 +259,11 @@ export class TestDataService {
           return bValue - aValue
         }
       })
-      .map((dept, index) => ({
+
+    const aggregatedData: DepartmentData[] = sortedData.map((dept, index) => ({
         ...dept,
         ranking: index + 1,
-        percentile: Math.round(((aggregatedData.length - index) / aggregatedData.length) * 100)
+        percentile: Math.round(((sortedData.length - index) / sortedData.length) * 100)
       }))
 
     return aggregatedData

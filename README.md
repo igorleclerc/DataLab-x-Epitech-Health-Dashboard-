@@ -168,13 +168,3 @@ Ce projet étant développé dans le cadre d'un hackathon, les contributions ext
 
 **Projet éducatif** - Hackathon Élysée DataLab 2025  
 Développé dans le cadre de l'innovation publique française.
-
----
-
-<div align="center">
-
-**🇫🇷 Fait avec ❤️ pour la République Française**
-
-*Élysée DataLab - Innovation au service du citoyen*
-
-</div>

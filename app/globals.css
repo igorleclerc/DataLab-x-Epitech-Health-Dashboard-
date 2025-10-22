@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+/* Variables CSS pour les couleurs gouvernementales françaises */
+:root {
+  /* Couleurs officielles du Gouvernement français */
+  --color-blue-france: #000091;
+  --color-blue-france-hover: #1212ff;
+  --color-blue-france-active: #2323ff;
+  --color-red-marianne: #e1000f;
+  --color-red-marianne-hover: #ff292f;
+  --color-red-marianne-active: #ff4347;
+
+  /* Couleurs grises gouvernementales */
+  --color-grey-france-50: #f6f6f6;
+  --color-grey-france-100: #eeeeee;
+  --color-grey-france-200: #e5e5e5;
+  --color-grey-france-300: #d4d4d4;
+  --color-grey-france-400: #929292;
+  --color-grey-france-500: #666666;
+  --color-grey-france-600: #4d4d4d;
+  --color-grey-france-700: #383838;
+  --color-grey-france-800: #1e1e1e;
+  --color-grey-france-900: #161616;
+
+  /* Couleurs d'état gouvernementales */
+  --color-success-france: #18753c;
+  --color-warning-france: #fc5d00;
+  --color-error-france: #ce0500;
+  --color-info-france: #0063cb;
+}
+
+/* Styles de base */
+body {
+  color: var(--color-grey-france-900);
+  background-color: var(--color-grey-france-50);
+}
+
+/* Classes utilitaires gouvernementales */
+@layer utilities {
+
+  /* Couleurs de texte */
+  .text-blue-france {
+    color: var(--color-blue-france);
+  }
+
+  .text-red-marianne {
+    color: var(--color-red-marianne);
+  }
+
+  .text-grey-france-50 {
+    color: var(--color-grey-france-50);
+  }
+
+  .text-grey-france-100 {
+    color: var(--color-grey-france-100);
+  }
+
+  .text-grey-france-200 {
+    color: var(--color-grey-france-200);
+  }
+
+  .text-grey-france-300 {
+    color: var(--color-grey-france-300);
+  }
+
+  .text-grey-france-400 {
+    color: var(--color-grey-france-400);
+  }
+
+  .text-grey-france-500 {
+    color: var(--color-grey-france-500);
+  }
+
+  .text-grey-france-600 {
+    color: var(--color-grey-france-600);
+  }
+
+  .text-grey-france-700 {
+    color: var(--color-grey-france-700);
+  }
+
+  .text-grey-france-800 {
+    color: var(--color-grey-france-800);
+  }
+
+  .text-grey-france-900 {
+    color: var(--color-grey-france-900);
+  }
+
+  .text-success-france {
+    color: var(--color-success-france);
+  }
+
+  .text-warning-france {
+    color: var(--color-warning-france);
+  }
+
+  .text-error-france {
+    color: var(--color-error-france);
+  }
+
+  .text-info-france {
+    color: var(--color-info-france);
+  }
+
+  /* Couleurs de fond */
+  .bg-blue-france {
+    background-color: var(--color-blue-france);
+  }
+
+  .bg-blue-france-hover {
+    background-color: var(--color-blue-france-hover);
+  }
+
+  .bg-blue-france-active {
+    background-color: var(--color-blue-france-active);
+  }
+
+  .bg-red-marianne {
+    background-color: var(--color-red-marianne);
+  }
+
+  .bg-red-marianne-hover {
+    background-color: var(--color-red-marianne-hover);
+  }
+
+  .bg-red-marianne-active {
+    background-color: var(--color-red-marianne-active);
+  }
+
+  .bg-grey-france-50 {
+    background-color: var(--color-grey-france-50);
+  }
+
+  .bg-grey-france-100 {
+    background-color: var(--color-grey-france-100);
+  }
+
+  .bg-grey-france-200 {
+    background-color: var(--color-grey-france-200);
+  }
+
+  .bg-grey-france-300 {
+    background-color: var(--color-grey-france-300);
+  }
+
+  .bg-grey-france-400 {
+    background-color: var(--color-grey-france-400);
+  }
+
+  .bg-grey-france-500 {
+    background-color: var(--color-grey-france-500);
+  }
+
+  .bg-grey-france-600 {
+    background-color: var(--color-grey-france-600);
+  }
+
+  .bg-grey-france-700 {
+    background-color: var(--color-grey-france-700);
+  }
+
+  .bg-grey-france-800 {
+    background-color: var(--color-grey-france-800);
+  }
+
+  .bg-grey-france-900 {
+    background-color: var(--color-grey-france-900);
+  }
+
+  .bg-success-france {
+    background-color: var(--color-success-france);
+  }
+
+  .bg-warning-france {
+    background-color: var(--color-warning-france);
+  }
+
+  .bg-error-france {
+    background-color: var(--color-error-france);
+  }
+
+  .bg-info-france {
+    background-color: var(--color-info-france);
+  }
+
+  /* Couleurs de bordure */
+  .border-blue-france {
+    border-color: var(--color-blue-france);
+  }
+
+  .border-red-marianne {
+    border-color: var(--color-red-marianne);
+  }
+
+  .border-grey-france-100 {
+    border-color: var(--color-grey-france-100);
+  }
+
+  .border-grey-france-200 {
+    border-color: var(--color-grey-france-200);
+  }
+
+  .border-grey-france-300 {
+    border-color: var(--color-grey-france-300);
+  }
+
+  .border-grey-france-400 {
+    border-color: var(--color-grey-france-400);
+  }
+
+  .border-grey-france-500 {
+    border-color: var(--color-grey-france-500);
+  }
+
+
+}

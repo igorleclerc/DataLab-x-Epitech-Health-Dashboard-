@@ -31,23 +31,23 @@ export function Select({ value, onChange, options, placeholder = "Sélectionner.
         </label>
       )}
       
-      {/* Bouton principal */}
+      {/* Bouton principal - responsive */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group w-full flex items-center px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-blue-400 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 shadow-sm"
+        className="group w-full flex items-center px-3 sm:px-4 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-700 hover:border-blue-400 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 shadow-sm"
       >
         {Icon && (
-          <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg mr-3 group-hover:bg-blue-200 transition-colors">
-            <Icon className="w-4 h-4 text-blue-600" />
+          <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 rounded-lg mr-2 sm:mr-3 group-hover:bg-blue-200 transition-colors">
+            <Icon className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
           </div>
         )}
         
-        <div className="flex-1 text-left">
-          <div className="font-semibold text-gray-900">
+        <div className="flex-1 text-left min-w-0">
+          <div className="font-semibold text-gray-900 truncate">
             {selectedOption?.label || placeholder}
           </div>
           {selectedOption?.description && (
-            <div className="text-xs text-gray-500 mt-0.5">
+            <div className="text-xs text-gray-500 mt-0.5 truncate hidden sm:block">
               {selectedOption.description}
             </div>
           )}

@@ -78,21 +78,22 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header épuré */}
-      <header className="bg-white border-b border-gray-100 px-6 py-4">
-        <div className="flex items-center justify-between">
+      {/* Header responsive */}
+      <header className="bg-white border-b border-gray-100 px-4 sm:px-6 py-3 sm:py-4">
+        {/* Titre et contrôles principaux */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           {/* Titre */}
-          <div>
-            <h1 className="text-2xl font-bold text-blue-france">
+          <div className="flex-shrink-0">
+            <h1 className="text-xl sm:text-2xl font-bold text-blue-france">
               Dashboard Vaccination & Grippe
             </h1>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
               Données de surveillance sanitaire - France 2021-2024
             </p>
           </div>
 
-          {/* Contrôles principaux */}
-          <div className="flex items-center space-x-6">
+          {/* Contrôles principaux - responsive */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
             <DataToggle 
               currentType={dataType} 
               onTypeChange={handleDataTypeChange}
@@ -107,14 +108,14 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Barre de navigation secondaire */}
-        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-50">
+        {/* Barre de navigation secondaire - responsive */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-50">
           <ViewToggle 
             currentView={currentView}
             onViewChange={setCurrentView}
           />
           
-          <div className="flex items-center space-x-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
             <DataQualityIndicator 
               dataCount={departmentData.length} 
               dataType={dataType}
@@ -125,12 +126,12 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* Contenu principal */}
-      <main className="h-[calc(100vh-140px)]">
+      {/* Contenu principal - responsive */}
+      <main className="min-h-[calc(100vh-200px)] lg:h-[calc(100vh-180px)]">
         {currentView === 'map' && (
-          <div className="flex h-full">
-            {/* Carte - 70% */}
-            <div className="flex-1 w-[70%] p-4 pb-6">
+          <div className="flex flex-col lg:flex-row h-full">
+            {/* Carte - responsive */}
+            <div className="flex-1 lg:w-[70%] p-2 sm:p-4 lg:pb-6 order-2 lg:order-1">
               <InteractiveMap
                 data={departmentData}
                 dataType={dataType}
@@ -139,8 +140,8 @@ export default function Dashboard() {
               />
             </div>
 
-            {/* Panneau statistiques - 30% */}
-            <div className="w-[30%] border-l border-gray-100 bg-gray-50">
+            {/* Panneau statistiques - responsive */}
+            <div className="w-full lg:w-[30%] border-t lg:border-t-0 lg:border-l border-gray-100 bg-gray-50 order-1 lg:order-2 max-h-[40vh] lg:max-h-none overflow-y-auto lg:overflow-visible">
               <StatisticsPanel
                 dataType={dataType}
                 selectedDepartment={selectedDepartment}
@@ -151,7 +152,7 @@ export default function Dashboard() {
         )}
 
         {currentView === 'statistics' && (
-          <div className="h-full p-4">
+          <div className="h-full p-2 sm:p-4">
             <StatisticsPanel
               dataType={dataType}
               selectedDepartment={selectedDepartment}

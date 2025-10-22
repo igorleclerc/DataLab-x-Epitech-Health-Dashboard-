@@ -20,23 +20,23 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
 
   return (
     <div className="relative">
-      {/* Bouton principal */}
+      {/* Bouton principal - responsive */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-blue-400 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 min-w-[200px] shadow-sm"
+        className="group flex items-center px-3 sm:px-4 py-2 sm:py-3 bg-white border-2 border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-700 hover:border-blue-400 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 min-w-[160px] sm:min-w-[200px] shadow-sm"
       >
-        <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg mr-3 group-hover:bg-blue-200 transition-colors">
+        <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 bg-blue-100 rounded-lg mr-2 sm:mr-3 group-hover:bg-blue-200 transition-colors">
           <div
-            className="w-4 h-4 rounded-full border-2 border-white shadow-sm"
+            className="w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 border-white shadow-sm"
             style={{ backgroundColor: currentConfig.color }}
           />
         </div>
 
-        <div className="flex-1 text-left">
-          <div className="font-semibold text-gray-900">
+        <div className="flex-1 text-left min-w-0">
+          <div className="font-semibold text-gray-900 truncate">
             {currentConfig.name}
           </div>
-          <div className="text-xs text-gray-500 mt-0.5">
+          <div className="text-xs text-gray-500 mt-0.5 truncate hidden sm:block">
             {currentConfig.targetPopulation}
           </div>
         </div>
@@ -49,7 +49,7 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-3 w-80 bg-white border border-gray-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
+        <div className="absolute right-0 left-0 sm:left-auto mt-3 w-full sm:w-80 bg-white border border-gray-200 rounded-2xl shadow-2xl z-[60] overflow-hidden max-h-[80vh] overflow-y-auto">
           {/* Header condensé */}
           <div className="px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
             <div className="flex items-center">

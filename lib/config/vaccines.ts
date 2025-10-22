@@ -14,7 +14,7 @@ export const VACCINE_CONFIG: Record<DataType, VaccineInfo> = {
     id: 'hpv-vaccination',
     name: 'Vaccination HPV',
     description: 'Vaccination contre le papillomavirus humain',
-    targetPopulation: 'Filles et garçons 11-14 ans',
+    targetPopulation: 'Adolescents 11-14 ans (filles et garçons)',
     objective: 60,
     unit: '%',
     color: '#18753c' // Vert gouvernemental

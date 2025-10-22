@@ -262,41 +262,83 @@ export function StatisticsPanel({
         {dataType !== "flu-surveillance" && selectedDept?.vaccineTypes && (
           <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
             <h4 className="text-base font-medium text-gray-900 mb-4">
-              Types de Vaccins
+              Détail par Groupes
             </h4>
             <div className="space-y-3">
-              <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm font-medium text-gray-700">
-                  Grippe 65+
-                </span>
-                <span className="text-lg font-bold text-gray-900">
-                  {selectedDept.vaccineTypes.grippe65ansPlus.toFixed(1)}%
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm font-medium text-gray-700">
-                  Grippe &lt;65 ans
-                </span>
-                <span className="text-lg font-bold text-gray-900">
-                  {selectedDept.vaccineTypes.grippeMoins65.toFixed(1)}%
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm font-medium text-gray-700">
-                  HPV Filles
-                </span>
-                <span className="text-lg font-bold text-gray-900">
-                  {selectedDept.vaccineTypes.hpvFilles.toFixed(1)}%
-                </span>
-              </div>
-              <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <span className="text-sm font-medium text-gray-700">
-                  HPV Garçons
-                </span>
-                <span className="text-lg font-bold text-gray-900">
-                  {selectedDept.vaccineTypes.hpvGarcons.toFixed(1)}%
-                </span>
-              </div>
+              {/* Affichage conditionnel selon le type de vaccination */}
+              {dataType === 'grippe-vaccination' && (
+                <>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      65 ans et plus
+                    </span>
+                    <span className="text-lg font-bold text-gray-900">
+                      {selectedDept.vaccineTypes.grippe65ansPlus.toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      Moins de 65 ans à risque
+                    </span>
+                    <span className="text-lg font-bold text-gray-900">
+                      {selectedDept.vaccineTypes.grippeMoins65.toFixed(1)}%
+                    </span>
+                  </div>
+                </>
+              )}
+              
+              {dataType === 'hpv-vaccination' && (
+                <>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      Filles 11-14 ans
+                    </span>
+                    <span className="text-lg font-bold text-gray-900">
+                      {selectedDept.vaccineTypes.hpvFilles.toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      Garçons 11-14 ans
+                    </span>
+                    <span className="text-lg font-bold text-gray-900">
+                      {selectedDept.vaccineTypes.hpvGarcons.toFixed(1)}%
+                    </span>
+                  </div>
+                </>
+              )}
+              
+              {dataType === 'covid-vaccination' && (
+                <>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      65 ans et plus
+                    </span>
+                    <span className="text-lg font-bold text-gray-900">
+                      {selectedDept.ageGroups?.['65+']?.toFixed(1) || 'N/A'}%
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <span className="text-sm font-medium text-gray-700">
+                      12-64 ans
+                    </span>
+                    <span className="text-lg font-bold text-gray-900">
+                      {selectedDept.ageGroups?.['<65']?.toFixed(1) || 'N/A'}%
+                    </span>
+                  </div>
+                </>
+              )}
+              
+              {dataType === 'meningocoque-vaccination' && (
+                <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span className="text-sm font-medium text-gray-700">
+                    Nourrissons et jeunes adultes
+                  </span>
+                  <span className="text-lg font-bold text-gray-900">
+                    {selectedDept.vaccineTypes.meningocoque.toFixed(1)}%
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                 <span className="text-sm font-medium text-gray-700">
                   Méningocoque

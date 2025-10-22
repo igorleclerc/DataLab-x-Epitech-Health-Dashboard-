@@ -54,6 +54,9 @@ export const metadata: Metadata = {
   title: "Tableau de Bord Vaccination et Grippe - Gouvernement.fr",
   description:
     "Visualisation des données de vaccination et de surveillance de la grippe en France (2021-2024) - Ministère de la Santé et de la Prévention",
+    icons: {
+    icon: "/icon.png", // chemin depuis /public
+  },
 };
 
 export default function RootLayout({
@@ -63,6 +66,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={marianne.variable}>
+      <link rel="icon" href="/icon.png" sizes="any" />
       <body className="font-marianne antialiased bg-grey-france-50">
         {children}
       </body>

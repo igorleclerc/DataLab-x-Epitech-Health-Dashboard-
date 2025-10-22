@@ -168,12 +168,12 @@ export class TestDataService {
         year: year,
         ageGroups,
         vaccineTypes: {
-          grippe65ansPlus: ageGroups['65+'],
-          grippeMoins65: ageGroups['<65'],
-          hpvFilles: dataType === 'hpv-vaccination' ? ageGroups['65+'] : 45 + Math.random() * 25,
-          hpvGarcons: dataType === 'hpv-vaccination' ? ageGroups['<65'] : 25 + Math.random() * 20,
-          meningocoque: dataType === 'meningocoque-vaccination' ? primaryValue : 40 + Math.random() * 30,
-          covid19: dataType === 'covid-vaccination' ? primaryValue : 70 + Math.random() * 20
+          grippe65ansPlus: Math.min(100, Math.max(0, ageGroups['65+'])), // Limiter entre 0 et 100%
+          grippeMoins65: Math.min(100, Math.max(0, ageGroups['<65'])), // Limiter entre 0 et 100%
+          hpvFilles: dataType === 'hpv-vaccination' ? Math.min(100, Math.max(0, ageGroups['65+'])) : 45 + Math.random() * 25,
+          hpvGarcons: dataType === 'hpv-vaccination' ? Math.min(100, Math.max(0, ageGroups['<65'])) : 25 + Math.random() * 20,
+          meningocoque: dataType === 'meningocoque-vaccination' ? Math.min(100, Math.max(0, primaryValue)) : 40 + Math.random() * 30,
+          covid19: dataType === 'covid-vaccination' ? Math.min(100, Math.max(0, primaryValue)) : 70 + Math.random() * 20
         },
         fluDetails: {
           urgencyVisits: dataType === 'flu-surveillance' ? primaryValue * 0.6 : 15 + Math.random() * 20,

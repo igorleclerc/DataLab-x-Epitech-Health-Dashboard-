@@ -2,7 +2,7 @@ export type DataType = 'grippe-vaccination' | 'hpv-vaccination' | 'covid-vaccina
 export type ViewType = 'map' | 'statistics' | 'analytics'
 
 export interface VaccineTypeData {
-  grippe65Plus: number
+  grippe65ansPlus: number
   grippeMoins65: number
   hpvFilles: number
   hpvGarcons: number

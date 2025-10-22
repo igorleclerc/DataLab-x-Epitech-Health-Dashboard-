@@ -429,14 +429,14 @@ export class ServiceDonneesComplet {
       const dept = departmentMap.get(key);
       
       // Utiliser les données de grippe 65+ comme proxy pour la couverture vaccinale
-      if (item.grippe65Plus && item.annee >= 2020) {
-        dept.vaccinationCoverage = Math.max(dept.vaccinationCoverage, item.grippe65Plus);
-        dept.ageGroups['65+'] = item.grippe65Plus;
+      if (item.grippe65ansPlus && item.annee >= 2020) {
+        dept.vaccinationCoverage = Math.max(dept.vaccinationCoverage, item.grippe65ansPlus);
+        dept.ageGroups['65+'] = item.grippe65ansPlus;
       }
 
       // Utiliser les données de grippe <65 ans
-      if (item.grippeMoinsDe65Ans && item.annee >= 2020) {
-        dept.ageGroups['<65'] = item.grippeMoinsDe65Ans;
+      if (item.grippeMoins65ansRisque && item.annee >= 2020) {
+        dept.ageGroups['<65'] = item.grippeMoins65ansRisque;
       }
 
       dept.dataCount++;

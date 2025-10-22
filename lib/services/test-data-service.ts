@@ -112,10 +112,10 @@ export class TestDataService {
       switch (dataType) {
         case 'grippe-vaccination':
           // Grippe : meilleure couverture chez les 65+, plus faible chez les <65
-          const grippe65Plus = 55 + Math.random() * 35 // 55-90%
+          const grippe65ansPlus = 55 + Math.random() * 35 // 55-90%
           const grippeMoins65 = 20 + Math.random() * 25 // 20-45%
-          primaryValue = (grippe65Plus + grippeMoins65) / 2
-          ageGroups = { '65+': grippe65Plus, '<65': grippeMoins65 }
+          primaryValue = (grippe65ansPlus + grippeMoins65) / 2
+          ageGroups = { '65+': grippe65ansPlus, '<65': grippeMoins65 }
           break
           
         case 'hpv-vaccination':
@@ -168,7 +168,7 @@ export class TestDataService {
         year: year,
         ageGroups,
         vaccineTypes: {
-          grippe65Plus: ageGroups['65+'],
+          grippe65ansPlus: ageGroups['65+'],
           grippeMoins65: ageGroups['<65'],
           hpvFilles: dataType === 'hpv-vaccination' ? ageGroups['65+'] : 45 + Math.random() * 25,
           hpvGarcons: dataType === 'hpv-vaccination' ? ageGroups['<65'] : 25 + Math.random() * 20,

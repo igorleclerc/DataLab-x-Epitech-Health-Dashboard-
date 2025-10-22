@@ -120,7 +120,7 @@ export function InteractiveMap({
 
       // Ajouter des détails spécifiques selon le type
       if (dataType === "grippe-vaccination" && dept.vaccineTypes) {
-        content += `65+ ans: ${dept.vaccineTypes.grippe65Plus.toFixed(1)}%\n`;
+        content += `65+ ans: ${dept.vaccineTypes.grippe65ansPlus.toFixed(1)}%\n`;
         content += `<65 ans: ${dept.vaccineTypes.grippeMoins65.toFixed(1)}%`;
       } else if (dataType === "hpv-vaccination" && dept.vaccineTypes) {
         content += `Filles: ${dept.vaccineTypes.hpvFilles.toFixed(1)}%\n`;

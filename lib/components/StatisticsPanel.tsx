@@ -270,7 +270,7 @@ export function StatisticsPanel({
                   Grippe 65+
                 </span>
                 <span className="text-lg font-bold text-gray-900">
-                  {selectedDept.vaccineTypes.grippe65Plus.toFixed(1)}%
+                  {selectedDept.vaccineTypes.grippe65ansPlus.toFixed(1)}%
                 </span>
               </div>
               <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">

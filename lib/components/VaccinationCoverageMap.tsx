@@ -24,9 +24,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
   const [selectedMetric, setSelectedMetric] = useState<string>('grippe65ansPlus');
   const [selectedYear, setSelectedYear] = useState<string>('2024');
 
-
-
-  // Charger les données
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -50,7 +47,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
     loadData();
   }, []);
 
-  // Fonction pour obtenir la valeur selon la métrique sélectionnée
   const getValueFromItem = (item: any, metric: string): number => {
     const metricsMap: { [key: string]: keyof any } = {
       'Grippe 65 ans et plus': 'grippe65ansPlus',
@@ -71,16 +67,13 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
     return propertyName ? (item[propertyName] || 0) : 0;
   };
 
-  // Préparer les données pour la carte
   const mapData = useMemo(() => {
     if (!data.length) return [];
 
-    // Filtrer les données par année sélectionnée
     const filteredData = data.filter(item => 
       item.annee?.toString() === selectedYear
     );
 
-    // Transformer en format attendu par la carte
     return filteredData.map(item => ({
       code: item.departementCode?.toString() || '',
       name: item.departement || '',
@@ -89,7 +82,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
     })).filter(item => item.code && item.name && !isNaN(item.value) && item.value > 0);
   }, [data, selectedMetric, selectedYear]);
 
-  // Obtenir les métriques disponibles
   const availableMetrics = useMemo(() => {
     return [
       'Grippe 65 ans et plus',
@@ -107,7 +99,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
     ];
   }, []);
 
-  // Obtenir les années disponibles
   const availableYears = useMemo(() => {
     if (!data.length) return [];
     
@@ -117,7 +108,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
 
   const handleDepartmentClick = (department: VaccinationMapData) => {
     console.log('Département sélectionné:', department);
-    // Ici vous pourriez ouvrir un modal avec plus de détails
   };
 
   if (loading) {
@@ -151,7 +141,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Sélection de la métrique */}
           <Select
             label="Type de vaccination"
             value={selectedMetric}
@@ -164,7 +153,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
             }))}
           />
 
-          {/* Sélection de l'année */}
           <Select
             label="Année"
             value={selectedYear}
@@ -181,7 +169,6 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
 
       </div>
 
-      {/* Carte interactive */}
       {mapData.length > 0 ? (
         <DepartmentGrid
           data={mapData}

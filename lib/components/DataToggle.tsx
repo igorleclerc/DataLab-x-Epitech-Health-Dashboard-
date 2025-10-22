@@ -48,7 +48,6 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
         />
       </button>
 
-      {/* Dropdown condensé */}
       {isOpen && (
         <div className="absolute right-0 mt-3 w-80 bg-white border border-gray-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
           {/* Header condensé */}
@@ -65,7 +64,6 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
           </div>
 
           <div className="p-2">
-            {/* Section Vaccinations */}
             <div className="mb-3">
               <div className="flex items-center px-2 py-1 mb-1">
                 <Syringe className="w-3 h-3 text-green-600 mr-2" />
@@ -91,13 +89,11 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
                         : "hover:bg-gray-50 text-gray-700 border border-transparent hover:border-gray-200"
                     }`}
                   >
-                    {/* Indicateur de couleur */}
                     <div
                       className="w-3 h-3 rounded-full mr-3 flex-shrink-0"
                       style={{ backgroundColor: config.color }}
                     />
 
-                    {/* Contenu condensé */}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
                         <div className="font-medium text-sm truncate">
@@ -116,7 +112,6 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
               })}
             </div>
 
-            {/* Section Surveillance */}
             <div>
               <div className="flex items-center px-2 py-1 mb-1">
                 <Activity className="w-3 h-3 text-red-600 mr-2" />
@@ -142,7 +137,6 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
                         : "hover:bg-gray-50 text-gray-700 border border-transparent hover:border-gray-200"
                     }`}
                   >
-                    {/* Indicateur de couleur */}
                     <div
                       className="w-3 h-3 rounded-full mr-3 flex-shrink-0"
                       style={{ backgroundColor: config.color }}
@@ -170,7 +164,6 @@ export function DataToggle({ currentType, onTypeChange }: DataToggleProps) {
         </div>
       )}
 
-      {/* Overlay pour fermer le dropdown */}
       {isOpen && (
         <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
       )}

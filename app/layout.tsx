@@ -5,48 +5,49 @@ import "./globals.css";
 const marianne = localFont({
   src: [
     {
-      path: "../public/fonts/Marianne-Regular.otf",
+      path: "./fonts/Marianne-Regular.otf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../public/fonts/Marianne-RegularItalic.otf",
+      path: "./fonts/Marianne-RegularItalic.otf",
       weight: "400",
       style: "italic",
     },
     {
-      path: "../public/fonts/Marianne-Medium.otf",
+      path: "./fonts/Marianne-Medium.otf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../public/fonts/Marianne-MediumItalic.otf",
+      path: "./fonts/Marianne-MediumItalic.otf",
       weight: "500",
       style: "italic",
     },
     {
-      path: "../public/fonts/Marianne-Bold.otf",
+      path: "./fonts/Marianne-Bold.otf",
       weight: "700",
       style: "normal",
     },
     {
-      path: "../public/fonts/Marianne-BoldItalic.otf",
+      path: "./fonts/Marianne-BoldItalic.otf",
       weight: "700",
       style: "italic",
     },
     {
-      path: "../public/fonts/Marianne-ExtraBold.otf",
+      path: "./fonts/Marianne-ExtraBold.otf",
       weight: "800",
       style: "normal",
     },
     {
-      path: "../public/fonts/Marianne-ExtraBoldItalic.otf",
+      path: "./fonts/Marianne-ExtraBoldItalic.otf",
       weight: "800",
       style: "italic",
     },
   ],
   variable: "--font-marianne",
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {

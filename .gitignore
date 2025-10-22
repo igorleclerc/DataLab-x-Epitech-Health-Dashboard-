@@ -24,7 +24,6 @@
 .DS_Store
 *.pem
 .kiro
-/public/fonts
 .vscode
 
 # debug

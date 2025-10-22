@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { Calendar, Syringe } from 'lucide-react';
 import DepartmentGrid from './DepartmentGrid';
+import { Select } from './Select';
 import { ServiceDonneesComplet } from '../services/service-donnees-complet';
 
 interface VaccinationMapData {
@@ -148,42 +150,32 @@ export default function VaccinationCoverageMap({ className = '' }: VaccinationCo
           Couverture Vaccinale par Département
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sélection de la métrique */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Type de vaccination
-            </label>
-            <select
-              value={selectedMetric}
-              onChange={(e) => setSelectedMetric(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#B01E09] focus:border-transparent"
-            >
-              {availableMetrics.map(([key, label]) => (
-                <option key={key} value={key}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Type de vaccination"
+            value={selectedMetric}
+            onChange={setSelectedMetric}
+            icon={Syringe}
+            options={availableMetrics.map(([key, label]) => ({
+              value: key,
+              label: label,
+              description: `Données de couverture ${label.toLowerCase()}`
+            }))}
+          />
 
           {/* Sélection de l'année */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Année
-            </label>
-            <select
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#B01E09] focus:border-transparent"
-            >
-              {availableYears.map(year => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            label="Année"
+            value={selectedYear}
+            onChange={setSelectedYear}
+            icon={Calendar}
+            options={availableYears.map(year => ({
+              value: year.toString(),
+              label: `Année ${year}`,
+              description: `Données de l'année ${year}`
+            }))}
+          />
         </div>
 
 

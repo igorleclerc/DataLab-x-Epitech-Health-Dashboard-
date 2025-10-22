@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Calendar, ChevronDown, Check } from 'lucide-react'
+import { Calendar, ChevronDown, Check, TrendingUp, Database } from 'lucide-react'
 
 interface YearSelectorProps {
   selectedYear: number | 'all'
@@ -19,11 +19,19 @@ export function YearSelector({ selectedYear, onYearChange, availableYears, dataT
   }
 
   const options = [
-    { value: 'all' as const, label: 'Toutes les années', description: 'Données agrégées 2021-2024' },
+    { 
+      value: 'all' as const, 
+      label: 'Toutes les années', 
+      description: 'Vue d\'ensemble 2021-2024',
+      icon: TrendingUp,
+      badge: 'Tendances'
+    },
     ...availableYears.map(year => ({
       value: year,
-      label: year.toString(),
-      description: `Données de l'année ${year}`
+      label: `Année ${year}`,
+      description: `Données spécifiques à ${year}`,
+      icon: Database,
+      badge: year === 2024 ? 'Récent' : undefined
     }))
   ]
 
@@ -31,67 +39,82 @@ export function YearSelector({ selectedYear, onYearChange, availableYears, dataT
 
   return (
     <div className="relative">
+      {/* Bouton principal */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-france focus:border-blue-france transition-colors min-w-[180px]"
+        className="group flex items-center px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-sm font-medium text-gray-700 hover:border-blue-400 hover:bg-blue-50 focus:outline-none focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200 min-w-[200px] shadow-sm"
       >
-        <Calendar className="w-4 h-4 mr-3 text-gray-500" />
-        <div className="flex-1 text-left">
-          <div className="font-medium">{selectedOption?.label}</div>
-          <div className="text-xs text-gray-500">{selectedOption?.description}</div>
+        <div className="flex items-center justify-center w-8 h-8 bg-blue-100 rounded-lg mr-3 group-hover:bg-blue-200 transition-colors">
+          <Calendar className="w-4 h-4 text-blue-600" />
         </div>
-        <ChevronDown className="w-4 h-4 ml-2 text-gray-400" />
+        
+        <div className="flex-1 text-left">
+          <div className="font-semibold text-gray-900">{selectedOption?.label}</div>
+          <div className="text-xs text-gray-500 mt-0.5">{selectedOption?.description}</div>
+        </div>
+        
+        <ChevronDown className={`w-5 h-5 ml-2 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
+      {/* Dropdown condensé */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
-          {/* Header du dropdown */}
-          <div className="px-4 py-3 bg-blue-france text-white rounded-t-lg">
-            <div className="text-sm font-semibold">Période d'analyse</div>
-            <div className="text-xs opacity-90 mt-1">Sélectionnez une année ou toutes les années</div>
-          </div>
-          
-          <div className="p-2">
-            {options.map((option) => (
-              <button
-                key={option.value}
-                onClick={() => {
-                  onYearChange(option.value)
-                  setIsOpen(false)
-                }}
-                className={`w-full flex items-center px-4 py-3 text-left rounded-md transition-all duration-200 ${
-                  selectedYear === option.value
-                    ? 'bg-blue-france bg-opacity-10 text-blue-france border border-blue-france border-opacity-30'
-                    : 'hover:bg-gray-50 text-gray-700 hover:border hover:border-gray-200'
-                }`}
-              >
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <div className="font-medium">{option.label}</div>
-                    {selectedYear === option.value && (
-                      <div className="w-5 h-5 bg-blue-france rounded-full flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    {option.description}
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
-          
-          {/* Footer informatif */}
-          <div className="border-t border-gray-100 px-4 py-3 bg-gray-50 rounded-b-lg">
-            <div className="flex items-start space-x-2">
-              <div className="w-4 h-4 bg-blue-france rounded-full flex items-center justify-center mt-0.5">
-                <div className="w-1.5 h-1.5 bg-white rounded-full" />
-              </div>
-              <div className="text-xs text-gray-600">
-                <strong>Données agrégées :</strong> Moyenne calculée sur toutes les années disponibles pour une vue d'ensemble des tendances.
-              </div>
+        <div className="absolute right-0 mt-3 w-72 bg-white border border-gray-200 rounded-2xl shadow-2xl z-50 overflow-hidden">
+          {/* Header condensé */}
+          <div className="px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+            <div className="flex items-center">
+              <Calendar className="w-4 h-4 mr-2" />
+              <div className="text-sm font-semibold">Période d'analyse</div>
             </div>
+          </div>
+          
+          {/* Options condensées */}
+          <div className="p-2">
+            {options.map((option) => {
+              const IconComponent = option.icon
+              const isSelected = selectedYear === option.value
+              
+              return (
+                <button
+                  key={option.value}
+                  onClick={() => {
+                    onYearChange(option.value)
+                    setIsOpen(false)
+                  }}
+                  className={`w-full flex items-center px-3 py-2 text-left rounded-lg transition-all duration-200 mb-1 last:mb-0 ${
+                    isSelected
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                      : 'hover:bg-gray-50 text-gray-700 border border-transparent hover:border-gray-200'
+                  }`}
+                >
+                  {/* Icône */}
+                  <IconComponent className={`w-4 h-4 mr-3 ${isSelected ? 'text-blue-600' : 'text-gray-500'}`} />
+                  
+                  {/* Contenu condensé */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <div className="font-medium text-sm truncate">{option.label}</div>
+                      <div className="flex items-center space-x-2">
+                        {option.badge && (
+                          <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                            option.badge === 'Tendances' 
+                              ? 'bg-purple-100 text-purple-700'
+                              : 'bg-green-100 text-green-700'
+                          }`}>
+                            {option.badge}
+                          </span>
+                        )}
+                        {isSelected && (
+                          <Check className="w-4 h-4 text-blue-600" />
+                        )}
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-500 truncate">
+                      {option.description}
+                    </div>
+                  </div>
+                </button>
+              )
+            })}
           </div>
         </div>
       )}

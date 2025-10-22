@@ -25,6 +25,7 @@
 *.pem
 .kiro
 /public/fonts
+.vscode
 
 # debug
 npm-debug.log*

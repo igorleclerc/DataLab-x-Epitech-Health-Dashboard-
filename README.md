@@ -1,108 +1,180 @@
-# Tableau de Bord Vaccination et Grippe
+# 🏥 Dashboard Vaccination & Grippe
 
-Projet développé dans le cadre du hackathon Élysée DataLab 2025 pour la visualisation des données de vaccination et de surveillance de la grippe en France.
+> **Plateforme de visualisation interactive des données de santé publique française**
 
-## 🎯 Objectifs du Projet
+Développé pour le **Hackathon Élysée DataLab 2025**, ce dashboard offre une visualisation cartographique interactive des données de vaccination et de surveillance de la grippe en France (2021-2024).
 
-- **Visualisation des données** : Créer des graphiques interactifs pour analyser les données de vaccination et de surveillance grippe
-- **Prédictions IA** : Implémenter des prédictions basées sur des modèles de langage (fonctionnalité optionnelle)
-- **Interface française** : Application entièrement en français avec formatage des dates et nombres selon les standards français
+![Dashboard Preview](public/logo.png)
 
-## 📊 Données Utilisées
+## ✨ Fonctionnalités Principales
 
-### Vaccination
+### 🗺️ Carte Interactive
+- **Visualisation départementale** : Carte de France avec données colorées par département
+- **Interaction intuitive** : Survol et clic pour explorer les détails
+- **Basculement de données** : Vaccination ↔ Surveillance grippe en un clic
 
-- `campagne-2024.csv` : Données de campagne de vaccination
-- `couverture-2024.csv` : Couverture vaccinale par région
-- `doses-actes-2024.csv` : Doses administrées et actes de vaccination
+### 📊 Analyses Statistiques
+- **Métriques clés** : Couverture vaccinale, taux d'urgences, consultations SOS Médecins
+- **Répartition démographique** : Analyses par tranches d'âge avec visualisations
+- **Évolution temporelle** : Tendances et comparaisons multi-années
 
-### Surveillance Grippe
-
-- `grippe-passages-aux-urgences-et-actes-sos-medecins-france.csv` : Données nationales
-- `grippe-passages-aux-urgences-et-actes-sos-medecins-departement.csv` : Données départementales
+### 🎛️ Interface Adaptative
+- **Design responsive** : Optimisé desktop, tablette et mobile
+- **Navigation simple** : Interface épurée sans filtres complexes
+- **Accessibilité** : Conforme aux standards d'accessibilité web
 
 ## 🚀 Démarrage Rapide
 
 ### Prérequis
-
-- Node.js 18+
-- pnpm (recommandé)
+- **Node.js** 18+ 
+- **pnpm** (gestionnaire de paquets recommandé)
 
 ### Installation
 
 ```bash
-# Cloner le projet
+# Cloner le repository
 git clone [url-du-repo]
 cd dahsboard
 
 # Installer les dépendances
 pnpm install
 
-# Lancer le serveur de développement
+# Lancer en mode développement
 pnpm dev
 ```
 
-Ouvrir [http://localhost:3000](http://localhost:3000) dans votre navigateur.
+🌐 **Accès** : [http://localhost:3000](http://localhost:3000)
 
-## 🛠️ Technologies Utilisées
+## 🏗️ Architecture Technique
 
-- **Framework** : Next.js 15 avec App Router
-- **Langage** : TypeScript
-- **Styling** : Tailwind CSS 4
-- **Graphiques** : Recharts
-- **Parsing CSV** : Papa Parse
-- **Icônes** : Lucide React
+### Stack Technologique
+| Composant | Technologie | Version |
+|-----------|-------------|---------|
+| **Framework** | Next.js | 15.5.6 |
+| **Langage** | TypeScript | 5+ |
+| **Styling** | Tailwind CSS | 4 |
+| **Cartes** | React Simple Maps | 3.0.0 |
+| **Graphiques** | Recharts | 3.3.0 |
+| **Données** | Papa Parse | 5.5.3 |
+| **Géospatial** | D3.js | 3.1.1+ |
 
-## 🎨 Palette de Couleurs
-
-- **Primaire** : #10162F (Bleu marine)
-- **Arrière-plan** : #FFFFFF (Blanc)
-- **Accent** : #B01E09 (Rouge)
-
-## 📁 Structure du Projet
+### Structure du Projet
 
 ```
-├── app/                    # Pages Next.js (App Router)
-├── lib/
-│   ├── types/             # Interfaces TypeScript
-│   ├── constants/         # Constantes et textes
-│   └── utils/             # Utilitaires (formatage, etc.)
-├── data/                  # Fichiers CSV
-└── public/                # Assets statiques
+📦 dahsboard/
+├── 🎨 app/                     # Pages & Layout (App Router)
+│   ├── fonts/                  # Polices Marianne (République Française)
+│   ├── globals.css             # Styles globaux
+│   ├── layout.tsx              # Layout principal
+│   └── page.tsx                # Page d'accueil (Dashboard)
+├── 📚 lib/                     # Logique métier
+│   ├── components/             # Composants React réutilisables
+│   │   ├── InteractiveMap.tsx  # Carte interactive principale
+│   │   ├── StatisticsPanel.tsx # Panneau de statistiques
+│   │   ├── AnalyticsPanel.tsx  # Analyses avancées
+│   │   └── ...                 # Autres composants UI
+│   ├── services/               # Services de données
+│   │   ├── dashboard-data-service.ts  # Service principal
+│   │   ├── parseur-vaccination.ts     # Parser données vaccination
+│   │   └── parseur-grippe.ts          # Parser données grippe
+│   ├── types/                  # Définitions TypeScript
+│   └── utils/                  # Utilitaires (formatage, etc.)
+├── 📊 public/data/             # Datasets CSV
+│   ├── campagne-*.csv          # Données campagnes vaccination
+│   ├── couverture-*.csv        # Couverture vaccinale
+│   ├── doses-actes-*.csv       # Doses administrées
+│   └── grippe-*.csv            # Surveillance grippe
+└── 🔧 Configuration            # Config Next.js, TypeScript, etc.
 ```
 
-## 🔧 Développement
+## 📊 Sources de Données
 
-### Scripts Disponibles
+### 💉 Vaccination (2021-2024)
+- **Campagnes** : Données de campagnes de vaccination par année
+- **Couverture** : Taux de couverture vaccinale par département/région
+- **Doses** : Nombre de doses administrées et actes de vaccination
+
+### 🤒 Surveillance Grippe
+- **Urgences** : Passages aux urgences liés à la grippe
+- **SOS Médecins** : Consultations et actes médicaux
+- **Géolocalisation** : Données nationales, régionales et départementales
+
+## 🎨 Design System
+
+### Palette Gouvernementale
+```css
+/* Couleurs officielles République Française */
+--bleu-france: #000091      /* Primaire */
+--rouge-marianne: #E1000F   /* Accent */
+--gris-france: #929292      /* Secondaire */
+--blanc: #FFFFFF            /* Arrière-plan */
+```
+
+### Typographie
+- **Police** : Marianne (police officielle de l'État français)
+- **Hiérarchie** : Système typographique cohérent
+- **Lisibilité** : Optimisée pour l'accessibilité
+
+## 🔧 Scripts de Développement
 
 ```bash
-pnpm dev          # Serveur de développement
-pnpm build        # Build de production
-pnpm start        # Serveur de production
+# Développement avec Turbopack (ultra-rapide)
+pnpm dev
+
+# Build de production optimisé
+pnpm build
+
+# Serveur de production
+pnpm start
 ```
 
-### Fonctionnalités Implémentées
+## 📋 Roadmap & Statut
 
-- ✅ Configuration du projet et dépendances
-- ✅ Types TypeScript pour les données
-- ✅ Interface utilisateur en français
-- ✅ Palette de couleurs personnalisée
-- 🚧 Parseurs CSV (en cours)
-- ⏳ Composants de visualisation
-- ⏳ Interface utilisateur complète
+### ✅ Fonctionnalités Implémentées
+- [x] Architecture Next.js 15 + TypeScript
+- [x] Carte interactive des départements français
+- [x] Parseurs CSV pour données vaccination/grippe
+- [x] Interface responsive et accessible
+- [x] Panneau statistiques avec métriques clés
+- [x] Basculement vaccination ↔ grippe
+- [x] Sélection d'années (2021-2024)
 
-## 📝 Spécifications
+### 🚧 En Développement
+- [ ] Analyses prédictives IA (optionnel)
+- [ ] Export de données/graphiques
+- [ ] Mode comparaison multi-départements
 
-Le projet suit une approche de développement dirigée par les spécifications :
+## 🏆 Contexte Hackathon
 
-- `requirements.md` : Exigences fonctionnelles
-- `design.md` : Architecture et conception
-- `tasks.md` : Plan d'implémentation
+**Élysée DataLab 2025** - Équipe d'ingénierie de la République française
 
-## 🏆 Hackathon Élysée DataLab
+**Objectif** : Créer des outils de visualisation innovants pour les données de santé publique, facilitant la prise de décision et la communication vers les citoyens.
 
-Ce projet est développé dans le cadre du hackathon organisé par l'Élysée DataLab, l'équipe d'ingénierie de la République française, avec pour objectif de créer des outils de visualisation et d'analyse des données de santé publique.
+**Approche** : Développement dirigé par les spécifications avec méthodologie agile.
+
+## 📝 Documentation Technique
+
+Le projet suit une approche **Spec-Driven Development** :
+
+- 📋 **[Requirements](/.kiro/specs/vaccination-flu-dashboard/requirements.md)** : Exigences fonctionnelles détaillées
+- 🏗️ **[Design](/.kiro/specs/vaccination-flu-dashboard/design.md)** : Architecture et conception technique  
+- ✅ **[Tasks](/.kiro/specs/vaccination-flu-dashboard/tasks.md)** : Plan d'implémentation et suivi
+
+## 🤝 Contribution
+
+Ce projet étant développé dans le cadre d'un hackathon, les contributions externes ne sont pas acceptées durant la période de compétition.
 
 ## 📄 Licence
 
-Projet développé dans le cadre éducatif - Hackathon Élysée DataLab 2025
+**Projet éducatif** - Hackathon Élysée DataLab 2025  
+Développé dans le cadre de l'innovation publique française.
+
+---
+
+<div align="center">
+
+**🇫🇷 Fait avec ❤️ pour la République Française**
+
+*Élysée DataLab - Innovation au service du citoyen*
+
+</div>

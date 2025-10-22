@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   description:
     "Visualisation des données de vaccination et de surveillance de la grippe en France (2021-2024) - Ministère de la Santé et de la Prévention",
     icons: {
-    icon: "/icon.png", // chemin depuis /public
+      icon: "/icon.png", 
   },
 };
 

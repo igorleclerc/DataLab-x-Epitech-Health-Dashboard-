@@ -49,14 +49,28 @@ export function StatisticsPanel({
             ) / validCoverage.length
           : 0;
 
-      const ageGroup65Plus = departmentData.reduce(
-        (sum, d) => sum + (d.ageGroups?.["65+"] || 0),
-        0
+      // Calculer la moyenne des groupes d'âge, pas la somme !
+      const validAgeData65Plus = departmentData.filter(
+        (d) => d.ageGroups?.["65+"] !== undefined
       );
-      const ageGroupUnder65 = departmentData.reduce(
-        (sum, d) => sum + (d.ageGroups?.["<65"] || 0),
-        0
+      const ageGroup65Plus =
+        validAgeData65Plus.length > 0
+          ? validAgeData65Plus.reduce(
+              (sum, d) => sum + (d.ageGroups?.["65+"] || 0),
+              0
+            ) / validAgeData65Plus.length
+          : 0;
+
+      const validAgeDataUnder65 = departmentData.filter(
+        (d) => d.ageGroups?.["<65"] !== undefined
       );
+      const ageGroupUnder65 =
+        validAgeDataUnder65.length > 0
+          ? validAgeDataUnder65.reduce(
+              (sum, d) => sum + (d.ageGroups?.["<65"] || 0),
+              0
+            ) / validAgeDataUnder65.length
+          : 0;
 
       return {
         totalPopulation,
@@ -266,7 +280,7 @@ export function StatisticsPanel({
             </h4>
             <div className="space-y-3">
               {/* Affichage conditionnel selon le type de vaccination */}
-              {dataType === 'grippe-vaccination' && (
+              {dataType === "grippe-vaccination" && (
                 <>
                   <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                     <span className="text-sm font-medium text-gray-700">
@@ -286,8 +300,8 @@ export function StatisticsPanel({
                   </div>
                 </>
               )}
-              
-              {dataType === 'hpv-vaccination' && (
+
+              {dataType === "hpv-vaccination" && (
                 <>
                   <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                     <span className="text-sm font-medium text-gray-700">
@@ -307,15 +321,15 @@ export function StatisticsPanel({
                   </div>
                 </>
               )}
-              
-              {dataType === 'covid-vaccination' && (
+
+              {dataType === "covid-vaccination" && (
                 <>
                   <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                     <span className="text-sm font-medium text-gray-700">
                       65 ans et plus
                     </span>
                     <span className="text-lg font-bold text-gray-900">
-                      {selectedDept.ageGroups?.['65+']?.toFixed(1) || 'N/A'}%
+                      {selectedDept.ageGroups?.["65+"]?.toFixed(1) || "N/A"}%
                     </span>
                   </div>
                   <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
@@ -323,13 +337,13 @@ export function StatisticsPanel({
                       12-64 ans
                     </span>
                     <span className="text-lg font-bold text-gray-900">
-                      {selectedDept.ageGroups?.['<65']?.toFixed(1) || 'N/A'}%
+                      {selectedDept.ageGroups?.["<65"]?.toFixed(1) || "N/A"}%
                     </span>
                   </div>
                 </>
               )}
-              
-              {dataType === 'meningocoque-vaccination' && (
+
+              {dataType === "meningocoque-vaccination" && (
                 <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                   <span className="text-sm font-medium text-gray-700">
                     Nourrissons et jeunes adultes

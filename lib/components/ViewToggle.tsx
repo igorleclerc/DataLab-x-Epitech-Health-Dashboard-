@@ -34,7 +34,7 @@ export function ViewToggle({ currentView, onViewChange }: ViewToggleProps) {
   ]
 
   return (
-    <div className="flex bg-gray-100 rounded-2xl p-2 shadow-inner">
+    <div className="flex flex-col sm:flex-row bg-gray-100 rounded-2xl p-2 shadow-inner gap-1 sm:gap-0">
       {views.map(({ id, label, icon: Icon, description, color }) => {
         const isActive = currentView === id
         
@@ -58,26 +58,27 @@ export function ViewToggle({ currentView, onViewChange }: ViewToggleProps) {
             key={id}
             onClick={() => onViewChange(id)}
             className={`
-              flex items-center px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 min-w-[120px]
+              flex flex-col sm:flex-row items-center px-3 sm:px-4 py-2 sm:py-3 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 min-w-[100px] sm:min-w-[120px] justify-center sm:justify-start
               ${isActive 
                 ? colorClasses[color].active
                 : colorClasses[color].inactive
               }
             `}
           >
-            <div className={`flex items-center justify-center w-8 h-8 rounded-lg mr-3 transition-colors ${
+            <div className={`flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-lg mb-1 sm:mb-0 sm:mr-3 transition-colors ${
               isActive 
                 ? 'bg-black bg-opacity-15 shadow-inner' 
                 : 'bg-gray-200'
             }`}>
-              <Icon className={`w-4 h-4 ${
+              <Icon className={`w-3 h-3 sm:w-4 sm:h-4 ${
                 isActive 
                   ? 'text-white filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]' 
                   : 'text-gray-500'
               }`} />
             </div>
             
-            <div className="text-left">
+            {/* Version desktop */}
+            <div className="text-left hidden sm:block">
               <div className="font-semibold">{label}</div>
               <div className={`text-xs mt-0.5 ${
                 isActive 
@@ -85,6 +86,17 @@ export function ViewToggle({ currentView, onViewChange }: ViewToggleProps) {
                   : 'text-gray-500'
               }`}>
                 {description}
+              </div>
+            </div>
+            
+            {/* Version mobile */}
+            <div className="text-center sm:hidden">
+              <div className={`text-xs font-medium ${
+                isActive 
+                  ? 'text-white' 
+                  : 'text-gray-600'
+              }`}>
+                {label}
               </div>
             </div>
           </button>

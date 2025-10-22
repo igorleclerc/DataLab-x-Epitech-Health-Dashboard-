@@ -201,68 +201,68 @@ export function AnalyticsPanel({ dataType, departmentData, selectedDepartment }:
           </div>
         </div>
 
-        {/* Chiffres clés */}
-        <div className="grid grid-cols-4 gap-4">
-          <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+        {/* Chiffres clés - responsive */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="bg-blue-50 rounded-lg p-3 sm:p-4 border border-blue-200">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-blue-600">Moyenne Nationale</p>
-                <p className="text-2xl font-bold text-blue-900">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-blue-600 truncate">Moyenne Nationale</p>
+                <p className="text-lg sm:text-2xl font-bold text-blue-900">
                   {formatNumber(keyMetrics.moyenne, 1)}{isVaccination ? '%' : '/100k'}
                 </p>
               </div>
-              <BarChart3 className="w-8 h-8 text-blue-500" />
+              <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 flex-shrink-0" />
             </div>
           </div>
 
-          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+          <div className="bg-green-50 rounded-lg p-3 sm:p-4 border border-green-200">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-green-600">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-green-600 truncate">
                   {isVaccination ? 'Maximum' : 'Minimum'}
                 </p>
-                <p className="text-2xl font-bold text-green-900">
+                <p className="text-lg sm:text-2xl font-bold text-green-900">
                   {formatNumber(isVaccination ? keyMetrics.max : keyMetrics.min, 1)}{isVaccination ? '%' : '/100k'}
                 </p>
               </div>
-              <Award className="w-8 h-8 text-green-500" />
+              <Award className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 flex-shrink-0" />
             </div>
           </div>
 
-          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
+          <div className="bg-orange-50 rounded-lg p-3 sm:p-4 border border-orange-200">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-orange-600">Écart</p>
-                <p className="text-2xl font-bold text-orange-900">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-orange-600 truncate">Écart</p>
+                <p className="text-lg sm:text-2xl font-bold text-orange-900">
                   {formatNumber(keyMetrics.ecart, 1)}{isVaccination ? '%' : '/100k'}
                 </p>
               </div>
-              <TrendingDown className="w-8 h-8 text-orange-500" />
+              <TrendingDown className="w-6 h-6 sm:w-8 sm:h-8 text-orange-500 flex-shrink-0" />
             </div>
           </div>
 
-          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+          <div className="bg-red-50 rounded-lg p-3 sm:p-4 border border-red-200">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-red-600">
+              <div className="min-w-0 flex-1">
+                <p className="text-xs sm:text-sm font-medium text-red-600 truncate">
                   {isVaccination ? 'Sous objectif' : 'En alerte'}
                 </p>
-                <p className="text-2xl font-bold text-red-900">
+                <p className="text-lg sm:text-2xl font-bold text-red-900">
                   {isVaccination ? keyMetrics.departementsSousObjectif : keyMetrics.departementsEnAlerte}
                 </p>
                 <p className="text-xs text-red-600">
                   ({formatNumber(isVaccination ? keyMetrics.pourcentageSousObjectif : keyMetrics.pourcentageEnAlerte, 0)}%)
                 </p>
               </div>
-              <AlertCircle className="w-8 h-8 text-red-500" />
+              <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-red-500 flex-shrink-0" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Graphiques */}
-      <div className="p-6">
-        <div className="grid grid-cols-2 gap-6">
+      {/* Graphiques - responsive */}
+      <div className="p-3 sm:p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           
           {/* === GRAPHIQUES VACCINATION === */}
           {isVaccination && (

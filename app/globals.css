@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+/* Configuration Tailwind CSS v4 */
+@theme {
+  --font-family-marianne: var(--font-marianne), system-ui, sans-serif;
+  
+  --color-blue-france: #000091;
+  --color-blue-france-hover: #1212ff;
+  --color-blue-france-active: #2323ff;
+  --color-red-marianne: #e1000f;
+  --color-red-marianne-hover: #ff292f;
+  --color-red-marianne-active: #ff4347;
+  
+  --color-grey-france-50: #f6f6f6;
+  --color-grey-france-100: #eeeeee;
+  --color-grey-france-200: #e5e5e5;
+  --color-grey-france-300: #d4d4d4;
+  --color-grey-france-400: #929292;
+  --color-grey-france-500: #666666;
+  --color-grey-france-600: #4d4d4d;
+  --color-grey-france-700: #383838;
+  --color-grey-france-800: #1e1e1e;
+  --color-grey-france-900: #161616;
+  
+  --color-success-france: #18753c;
+  --color-warning-france: #fc5d00;
+  --color-error-france: #ce0500;
+  --color-info-france: #0063cb;
+}
+
 /* Variables CSS pour les couleurs gouvernementales françaises */
 :root {
   /* Couleurs officielles du Gouvernement français */
@@ -37,6 +65,11 @@ body {
 
 /* Classes utilitaires gouvernementales */
 @layer utilities {
+
+  /* Police personnalisée Marianne */
+  .font-marianne {
+    font-family: var(--font-marianne), system-ui, sans-serif;
+  }
 
   /* Couleurs de texte */
   .text-blue-france {
